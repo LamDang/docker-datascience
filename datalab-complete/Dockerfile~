@@ -1,4 +1,4 @@
-FROM lamdang/datalab:base
+FROM lamdang/datalab-base
 
 MAINTAINER Lam Dang <tunglam.dang@bnpparibas.com>
 

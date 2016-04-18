@@ -1,4 +1,4 @@
-FROM lamdang/datalab:base
+FROM lamdang/datalab-base
 
 MAINTAINER Lam Dang <tunglam.dang@bnpparibas.com>
 
@@ -38,3 +38,5 @@ RUN cd $CUS_PKG_PATH && \
 
 USER root
 RUN cd $CUS_PKG_PATH/vowpal_wabbit && make && make install
+
+USER datalab

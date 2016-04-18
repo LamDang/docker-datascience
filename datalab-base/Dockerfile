@@ -1,4 +1,4 @@
-FROM lamdang/datalab:minimal
+FROM lamdang/datalab-minimal
 
 MAINTAINER Lam Dang <tunglam.dang@bnpparibas.com>
 
@@ -47,3 +47,4 @@ RUN conda config --add channels r && \
     'r-rcurl=1.95*' \
     'r-randomforest=4.6*' && conda clean -tipsy
 
+USER datalab

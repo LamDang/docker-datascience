@@ -2,8 +2,6 @@ FROM jupyter/minimal-notebook:latest
 
 MAINTAINER Lam Dang <tunglam.dang@bnpparibas.com>
 
-# Start from https://github.com/jupyter/docker-stacks/blob/master/minimal-notebook
-
 # Change user base
 USER root 
 
