@@ -14,7 +14,7 @@ RUN chown -R $NB_USER:users /opt/conda && chown -R $NB_USER:users /home/$NB_USER
 
 USER $NB_USER
 
-# Setup datalab home directory
+# Setup datascience home directory
 
 RUN mkdir /home/$NB_USER/work && \ 
     mkdir /home/$NB_USER/data && \ 
