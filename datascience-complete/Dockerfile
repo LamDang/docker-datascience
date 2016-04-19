@@ -9,6 +9,7 @@ RUN mkdir packages
 ENV CUS_PKG_PATH /home/$NB_USER/packages
 
 # Install xgboost
+RUN conda install -y gcc
 RUN cd $CUS_PKG_PATH && \
     git clone --recursive https://github.com/dmlc/xgboost && \
     cd xgboost && make -j4 && \
