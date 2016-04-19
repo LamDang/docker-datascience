@@ -33,10 +33,10 @@ RUN apt-get install -yq --no-install-recommends \
     libtool \
     zlib1g-dev
 
-USER $NB_USER
-RUN cd $CUS_PKG_PATH && \
-    git clone https://github.com/JohnLangford/vowpal_wabbit.git
+#USER $NB_USER
+#RUN cd $CUS_PKG_PATH && \
+#    git clone https://github.com/JohnLangford/vowpal_wabbit.git
 
-RUN cd $CUS_PKG_PATH/vowpal_wabbit && make && make install
+#RUN cd $CUS_PKG_PATH/vowpal_wabbit && make && make install
 
 USER $NB_USER
