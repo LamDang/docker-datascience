@@ -9,10 +9,7 @@ RUN mkdir packages
 ENV CUS_PKG_PATH /home/$NB_USER/packages
 
 # Install xgboost
-
-
-
-
+RUN conda install -y gcc
 RUN cd $CUS_PKG_PATH && \
     git clone --recursive https://github.com/dmlc/xgboost && \
     cd xgboost && make -j4 && \
@@ -40,7 +37,6 @@ USER $NB_USER
 RUN cd $CUS_PKG_PATH && \
     git clone https://github.com/JohnLangford/vowpal_wabbit.git
 
-USER root
 RUN cd $CUS_PKG_PATH/vowpal_wabbit && make && make install
 
 USER $NB_USER

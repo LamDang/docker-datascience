@@ -37,7 +37,6 @@ USER $NB_USER
 RUN cd $CUS_PKG_PATH && \
     git clone https://github.com/JohnLangford/vowpal_wabbit.git
 
-USER root
 RUN cd $CUS_PKG_PATH/vowpal_wabbit && make && make install
 
 USER $NB_USER
