@@ -1,51 +1,44 @@
-FROM lamdang/ds-jupyter-setup:latest
+FROM lamdang/00_jupyter_setup:latest
 
 MAINTAINER Lam Dang
 
 # Install the whole anaconda distribution
 USER root
 
-RUN apt-get update --fix-missing && apt-get install -yq \
+RUN apt-get update -qq --fix-missing && apt-get install -yq \
     wget bzip2 ca-certificates \
     libglib2.0-0 libxext6 libsm6 libxrender1 \
-    git mercurial subversion
+    git mercurial subversion \
+    python-setuptools
 
 USER $NB_USER
 
-RUN conda update conda
-RUN conda install anaconda
+RUN conda update -yq conda
+RUN conda install -yq anaconda && \
+    conda clean -tipsy
 
-# Create Python 2 environment
-# RUN conda create --yes -p $CONDA_DIR/envs/python2 python=2.7 anaconda
+# Setup folder for non-Anaconda packages
+USER $NB_USER
 
-# USER root
+RUN mkdir /home/$NB_USER/packages
+ENV ADD_PKG_PATH /home/$NB_USER/packages
 
-# Install Python 2 kernel spec globally to avoid permission problems when NB_UID
-# switching at runtime.
-# RUN $CONDA_DIR/envs/python2/bin/python -m ipykernel install
+# Install additional packages
+USER $NB_USER
 
-# Install R in conda
-# USER $NB_USER
+### xgboost
+RUN cd $ADD_PKG_PATH && \
+    git clone --recursive https://github.com/dmlc/xgboost && \
+    cd xgboost && make -s -j4 && \
+    cd python-package && python setup.py install
 
-#RUN conda config --add channels r && \
-#    conda install --yes \
-#    'rpy2=2.7*' \
-#    'r-base=3.2*' \
-#    'r-irkernel=0.5*' \
-#    'r-plyr=1.8*' \
-#    'r-devtools=1.9*' \
-#    'r-dplyr=0.4*' \
-#    'r-ggplot2=1.0*' \
-#    'r-tidyr=0.3*' \
-#    'r-shiny=0.12*' \
-#    'r-rmarkdown=0.8*' \
-#    'r-forecast=5.8*' \
-#    'r-stringr=0.6*' \
-#    'r-rsqlite=1.0*' \
-#    'r-reshape2=1.4*' \
-#    'r-nycflights13=0.1*' \
-#    'r-caret=6.0*' \
-#    'r-rcurl=1.95*' \
-#    'r-randomforest=4.6*' && conda clean -tipsy
+### hyperopt
+RUN cd $ADD_PKG_PATH && \
+    git clone https://github.com/hyperopt/hyperopt.git && \
+    cd hyperopt && python setup.py develop
+
+### plotly 
+RUN pip install plotly
 
 USER $NB_USER
+
