@@ -18,10 +18,11 @@ RUN conda install -yq anaconda && \
     conda clean -tipsy
 
 # Setup folder for non-Anaconda packages
-USER $NB_USER
+USER root
 
-RUN mkdir /home/$NB_USER/packages
-ENV ADD_PKG_PATH /home/$NB_USER/packages
+RUN mkdir /usr/local/additional_packages && \
+    chown -r $NB_USER /usr/local/additional_packages
+ENV ADD_PKG_PATH /usr/local/additional_packages
 
 # Install additional packages
 USER $NB_USER
