@@ -14,7 +14,7 @@ RUN apt-get update -qq --fix-missing && apt-get install -yq \
 USER $NB_USER
 
 RUN conda update -yq conda
-RUN conda install -yq anaconda=4.*=*py3* && \
+RUN conda install -yq anaconda!=custom && \
     conda clean -tipsy
 
 # Setup folder for non-Anaconda packages
