@@ -21,7 +21,7 @@ RUN conda install -yq anaconda && \
 USER root
 
 RUN mkdir /usr/local/additional_packages && \
-    chown -r $NB_USER /usr/local/additional_packages
+    chown -R $NB_USER /usr/local/additional_packages
 ENV ADD_PKG_PATH /usr/local/additional_packages
 
 # Install additional packages
