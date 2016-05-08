@@ -14,9 +14,7 @@ RUN chown -R $NB_USER:$NB_USER /opt/conda
 # Setup datascience home directory
 USER $NB_USER
 
-RUN mkdir /home/$NB_USER/work && \ 
-    mkdir /home/$NB_USER/data && \ 
-    mkdir /home/$NB_USER/.jupyter && \
+RUN mkdir /home/$NB_USER/.jupyter && \
     mkdir /home/$NB_USER/.local && \
     echo "cacert=/etc/ssl/certs/ca-certificates.crt" > /home/$NB_USER/.curlrc
 
