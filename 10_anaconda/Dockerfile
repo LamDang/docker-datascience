@@ -17,8 +17,8 @@ RUN conda update -yq conda
 RUN conda install -yq anaconda!=custom && \
     conda clean -tipsy
 
-USER root
-RUN python -m nltk.downloader all -d /usr/share/nltk_data all 
+#USER root
+#RUN python -m nltk.downloader all -d /usr/share/nltk_data all 
 
 # Setup folder for non-Anaconda packages
 USER root
