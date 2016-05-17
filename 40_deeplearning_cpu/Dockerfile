@@ -10,7 +10,7 @@ USER $NB_USER
 RUN pip install theano 
 
 # Set up .theanorc for BLAS 
-RUN echo "[blas]\=ldflags=-L/usr/lib/ -lopenblas" > ~/.theanorc
+RUN echo "[blas]\nldflags=-L/usr/lib/ -lopenblas\n" > ~/.theanorc
 
 # Install Keras
 USER root
