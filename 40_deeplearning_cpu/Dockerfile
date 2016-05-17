@@ -7,7 +7,9 @@ USER root
 RUN apt-get update && apt-get install -y g++ liblapack-dev libatlas-dev libopenblas-dev 
 
 USER $NB_USER
-RUN pip install theano 
+RUN cd $ADD_PKG_PATH && \
+    git clone https://github.com/Theano/Theano.git && \
+    cd Theano && python setup.py develop 
 
 # Set up .theanorc for BLAS 
 RUN echo "[blas]\nldflags=-L/usr/lib/ -lopenblas\n" > ~/.theanorc
