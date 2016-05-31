@@ -79,5 +79,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends --force-yes \
 # Set up .theanorc for CUDA
 USER $NB_USER
 
-RUN echo "[global]\ndevice=gpu\nfloatX=float32\noptimizer_including=cudnn\n[lib]\ncnmem=0.8\n[nvcc]\nfastmath=True\n" >> ~/.theanorc
+RUN echo "[global]\ndevice=gpu\nfloatX=float32\noptimizer_including=cudnn\n[lib]\n[nvcc]\nfastmath=True\n" >> ~/.theanorc
 
