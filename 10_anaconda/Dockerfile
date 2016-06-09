@@ -45,5 +45,7 @@ RUN cd $ADD_PKG_PATH && \
 ### plotly 
 RUN pip install plotly
 
+### pyhive
+RUN pip install pyhive
 USER $NB_USER
 
