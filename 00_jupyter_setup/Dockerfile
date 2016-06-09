@@ -7,6 +7,7 @@ USER root
 
 ENV NB_UID 1001
 ENV NB_USER ipython
+ENV HOME /home/$NB_USER
 
 RUN useradd -m -s /bin/bash -u $NB_UID -U $NB_USER
 RUN chown -R $NB_USER:$NB_USER /opt/conda
