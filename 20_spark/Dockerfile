@@ -46,5 +46,4 @@ RUN jq --arg v "$CONDA_DIR/bin/python" \
         $CONDA_DIR/share/jupyter/kernels/python3/kernel.json > /tmp/kernel.json && \
         mv /tmp/kernel.json $CONDA_DIR/share/jupyter/kernels/python3/kernel.json
 
-# TODO: create 1 kernel for spark local, 1 for spark on Yarn
 USER $NB_USER

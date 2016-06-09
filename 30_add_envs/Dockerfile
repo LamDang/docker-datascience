@@ -6,7 +6,7 @@ MAINTAINER Lam Dang
 USER $NB_USER
 RUN conda create --yes -n python2 python=2.7
 RUN bash -c '. activate python2 && \
-    conda install anaconda!=custom && \
+    conda install -c defaults anaconda==${ANACONDA_VERSION} && \
     . deactivate'
 
 RUN bash -c '. activate python2 && \
