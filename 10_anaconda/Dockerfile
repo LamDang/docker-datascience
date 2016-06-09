@@ -3,6 +3,7 @@ FROM lamdang/00_jupyter_setup:latest
 MAINTAINER Lam Dang
 
 # Install the whole anaconda distribution
+ENV ANACONDA_VERSION 4.0.0
 USER root
 
 RUN apt-get update -qq --fix-missing && apt-get install -yq \
@@ -14,7 +15,7 @@ RUN apt-get update -qq --fix-missing && apt-get install -yq \
 USER $NB_USER
 
 RUN conda update -yq conda
-RUN conda install -yq anaconda!=custom && \
+RUN conda install -c defaults -yq anaconda==${ANACONDA_VERSION} && \
     conda clean -tipsy
 
 #USER root
