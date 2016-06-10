@@ -73,11 +73,11 @@ ENV CUDNN_VERSION 5
 LABEL com.nvidia.cudnn.version="5"
 
 RUN apt-get update && apt-get install -y --no-install-recommends --force-yes \
-            libcudnn5-dev && \
+            libcudnn5 libcudnn5-dev && \
     rm -rf /var/lib/apt/lists/*
 
 # Set up .theanorc for CUDA
 USER $NB_USER
 
-RUN echo "[global]\ndevice=gpu\nfloatX=float32\noptimizer_including=cudnn\n[lib]\n[nvcc]\nfastmath=True\n" >> ~/.theanorc
+RUN echo "[global]\ndevice=gpu\nfloatX=float32\noptimizer_including=cudnn\nmode=FAST_RUN\n[nvcc]\nfastmath=True\n" >> ~/.theanorc
 
