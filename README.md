@@ -15,23 +15,24 @@ sudo docker run [Docker Options] [Image Name] start-notebook.sh [Notebook Option
 
 ### Docker Options:
 
-#### Recommended Options:
+#### Recommended options:
 * **-d --restart=unless-stopped** - Run in detached mode and always restart container except manually stopped
 * **-p <host_port>:<contaier_port>** - Map container port to specific host port
 * **-e PASSWORD=<your_passwd> -e USE_HTTPS=yes** - Set password. It is recommended to always use HTTPS when password is set.
 * **-e NB_UID=<your_uid> --user root** - Set notebook user UID. This is important to control the permissions of files mounted from host or future files created by the container
 * **-v <host_absolute_path>:<container_absolute_path>** - Mount a host folder to container. It is recommended to use absolute path to avoid confusion
 
-#### Spark Options:
+#### Spark options:
 * **--net host** - When run Spark on YARN, Spark will communicate with YARN cluster with the IP of the container. One can either setup bridge network to make container visible to YARN cluster or let it use host network interface
 * Spark installation in this docker does not contain configuration to work with HADOOP cluster. One can mount the necessary *conf* folder to /usr/local/spark/conf to setup Spark configuration with HADOOP
 
 #### Run Jupyter with GPU & CUDA deep learning:
-**Prerequisites:**
-* Have CUDA capable GPU installed with driver
-* Install CUDA toolkit
-* Install nvidia-docker and nvidia-docker-plugin: https://github.com/NVIDIA/nvidia-docker/wiki/Installation
+* **Prerequisites:**
+  * Have CUDA capable GPU installed with driver
+  * Install CUDA toolkit
+  * Install nvidia-docker and nvidia-docker-plugin: https://github.com/NVIDIA/nvidia-docker/wiki/Installation
+* **How:** Run container as usual by replacing _sudo docker_ with _sudo nvidia-docker_
 
-**How:** Run container usual by replacing _sudo docker_ with _sudo nvidia-docker_
-
+#### Notebook options
+  Available options: cf. http://jupyter.readthedocs.io/en/latest/projects/config.html#command-line-options-for-configuration
 
