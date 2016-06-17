@@ -10,7 +10,7 @@ Each step should be independent and provide a runnable image.
 * 41_deeplearning_gpu: Add CUDA and CuDNN installation. To be run with nvidia-docker
 
 ## User guide
-### Launch a permanent Jupyter Notebook server 
+### Launch a Jupyter Notebook server 
 sudo docker run [Docker Options] [Image Name] start-notebook.sh [Notebook Options]
 
 ### Docker Options:
