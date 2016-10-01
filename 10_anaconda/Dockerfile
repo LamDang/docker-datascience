@@ -3,49 +3,36 @@ FROM lamdang/00_jupyter_setup:latest
 MAINTAINER Lam Dang
 
 # Install the whole anaconda distribution
-ENV ANACONDA_VERSION 4.0.0
-USER root
+ENV ANACONDA_VERSION 4.1.1
 
-RUN apt-get update -qq --fix-missing && apt-get install -yq \
+USER root
+RUN apt-get update --fix-missing && apt-get install -y \
     wget bzip2 ca-certificates \
     libglib2.0-0 libxext6 libsm6 libxrender1 \
     git mercurial subversion \
-    python-setuptools
+    python-setuptools htop screen
 
-USER $NB_USER
-
-RUN conda update -yq conda
-RUN conda install -c defaults -yq anaconda==${ANACONDA_VERSION} && \
+# Install Anaconda python 3
+USER $NB_UID
+RUN conda update -y conda
+RUN conda install -c defaults -y anaconda==${ANACONDA_VERSION} && \
     conda clean -tipsy
 
-#USER root
-#RUN python -m nltk.downloader all -d /usr/share/nltk_data all 
 
-# Setup folder for non-Anaconda packages
-USER root
+# Install Anaconda python 2.7
+USER $NB_UID
+RUN conda create --yes -n python2 python=2.7
+RUN bash -c '. activate python2 && \
+    conda install -c defaults anaconda==${ANACONDA_VERSION} && \
+    . deactivate'
 
-RUN mkdir /usr/local/additional_packages && \
-    chown -R $NB_USER /usr/local/additional_packages
-ENV ADD_PKG_PATH /usr/local/additional_packages
+# Create kernel
+USER $NB_UID
+RUN python -m ipykernel.kernelspec --prefix=$CONDA_DIR
 
-# Install additional packages
-USER $NB_USER
+RUN bash -c '. activate python2 && \
+    python -m ipykernel install --prefix=$CONDA_DIR && \
+    . deactivate'
 
-### xgboost
-RUN cd $ADD_PKG_PATH && \
-    git clone --recursive https://github.com/dmlc/xgboost && \
-    cd xgboost && make -s -j4 && \
-    cd python-package && python setup.py install
-
-### hyperopt
-RUN cd $ADD_PKG_PATH && \
-    git clone https://github.com/hyperopt/hyperopt.git && \
-    cd hyperopt && python setup.py develop
-
-### plotly 
-RUN pip install plotly
-
-### pyhive
-RUN pip install pyhive
 USER $NB_USER
 

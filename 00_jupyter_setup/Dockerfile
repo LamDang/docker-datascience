@@ -10,7 +10,7 @@ ENV NB_USER ipython
 ENV HOME /home/$NB_USER
 
 RUN useradd -m -s /bin/bash -u $NB_UID -U $NB_USER
-RUN chown -R $NB_USER:$NB_USER /opt/conda
+RUN chown -R $NB_UID /opt/conda
 
 # Setup datascience home directory
 USER $NB_USER
@@ -28,8 +28,9 @@ WORKDIR /home/$NB_USER
 ENTRYPOINT ["tini", "--"]
 CMD ["start-notebook.sh"]
 
+# Remove jovyan (default) user
 RUN cp /home/jovyan/.jupyter/jupyter_notebook_config.py /home/$NB_USER/.jupyter/
-RUN chown -R $NB_USER:users /home/$NB_USER/.jupyter
+RUN chown -R $NB_UID /home/$NB_USER/
 
 RUN deluser --remove-home jovyan && \
     rm -rf /home/jovyan 

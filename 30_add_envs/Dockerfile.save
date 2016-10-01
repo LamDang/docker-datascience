@@ -1,35 +1,11 @@
-FROM lamdang/20_spark:latest
+# Create Python 2 environment
+USER $NB_USER
+RUN conda create --yes -n python2 python=2.7
+RUN bash -c '. activate python2 && \
+    conda install -c defaults anaconda==${ANACONDA_VERSION} && \
+    . deactivate'FROM lamdang/20_spark:latest
 
 MAINTAINER Lam Dang
-
-# Setup folder for non-Anaconda packages
-USER root
-
-RUN mkdir /usr/local/additional_packages && \
-    chown -R $NB_USER /usr/local/additional_packages
-ENV ADD_PKG_PATH /usr/local/additional_packages
-
-# Install additional packages
-USER $NB_USER
-
-### xgboost
-RUN cd $ADD_PKG_PATH && \
-    git clone --recursive https://github.com/dmlc/xgboost && \
-    cd xgboost && make -s -j4 && \
-    cd python-package && python setup.py install
-
-### hyperopt
-RUN cd $ADD_PKG_PATH && \
-    git clone https://github.com/hyperopt/hyperopt.git && \
-    cd hyperopt && python setup.py develop
-
-### plotly
-RUN pip install plotly
-
-### pyhive
-RUN pip install pyhive
-
-USER $NB_USER
 
 # Create Python 2 environment
 USER $NB_USER

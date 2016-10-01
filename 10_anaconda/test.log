@@ -1,0 +1,47 @@
+Building test image
+Sending build context to Docker daemon 6.144 kB
+Step 1 : FROM lamdang/00_jupyter_setup:latest
+ ---> c33bf94324ab
+Step 2 : MAINTAINER Lam Dang
+ ---> Using cache
+ ---> a37952d4685c
+Step 3 : ENV ANACONDA_VERSION 4.1.1
+ ---> Using cache
+ ---> d4c67a8cfec5
+Step 4 : USER root
+ ---> Using cache
+ ---> c4353a4daf0b
+Step 5 : RUN apt-get update --fix-missing && apt-get install -y     wget bzip2 ca-certificates     libglib2.0-0 libxext6 libsm6 libxrender1     git mercurial subversion     python-setuptools htop screen
+ ---> Using cache
+ ---> 368939d1e0cb
+Step 6 : USER $NB_UID
+ ---> Using cache
+ ---> a97b7932e42e
+Step 7 : RUN conda update -y conda
+ ---> Using cache
+ ---> f0870d30b291
+Step 8 : RUN conda install -c defaults -y anaconda==${ANACONDA_VERSION} &&     conda clean -tipsy
+ ---> Using cache
+ ---> b9529721193c
+Step 9 : USER $NB_UID
+ ---> Using cache
+ ---> 800c0928ff33
+Step 10 : RUN conda create --yes -n python2 python=2.7
+ ---> Using cache
+ ---> 98bebc9533a8
+Step 11 : RUN bash -c '. activate python2 &&     conda install -c defaults anaconda==${ANACONDA_VERSION} &&     . deactivate'
+ ---> Using cache
+ ---> 27b1ffe5a7f1
+Step 12 : USER $NB_USER
+ ---> Using cache
+ ---> 3747d0fc8a88
+Successfully built 3747d0fc8a88
+Test anaconda version py3
+# packages in environment at /opt/conda:
+#
+anaconda                  4.1.1               np111py35_0  
+Test anaconda version py2
+# packages in environment at /opt/conda/envs/python2:
+#
+anaconda                  4.1.1               np111py27_0  
+Untagged: 10_anaconda:test
