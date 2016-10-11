@@ -18,6 +18,9 @@ RUN conda update -y conda
 RUN conda install -c defaults -y anaconda==${ANACONDA_VERSION} && \
     conda clean -tipsy
 
+RUN conda install nomkl numpy scipy scikit-learn numexpr && \
+    conda remove mkl mkl-service
+
 # Create kernel
 USER $NB_UID
 RUN python -m ipykernel install --prefix=$CONDA_DIR --display-name "Python 3"
