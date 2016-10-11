@@ -1,9 +1,9 @@
-FROM lamdang/00_jupyter_setup_py35:latest
+FROM lamdang/00_jupyter_setup:latest
 
 MAINTAINER Lam Dang
 
 # Install the whole anaconda distribution
-ENV ANACONDA_VERSION 4.1.1
+ENV ANACONDA_VERSION 4.2.0
 
 USER root
 RUN apt-get update --fix-missing && apt-get install -y \

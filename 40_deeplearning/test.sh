@@ -1,6 +1,6 @@
 #! /bin/bash
 ## Build tests
-image_name="40_deeplearning_py35:test"
+image_name="40_deeplearning:test"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 echo "Building test image"

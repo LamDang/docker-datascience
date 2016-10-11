@@ -3,7 +3,7 @@ FROM lamdang/00_jupyter_setup_py27:latest
 MAINTAINER Lam Dang
 
 # Install the whole anaconda distribution
-ENV ANACONDA_VERSION 4.1.1
+ENV ANACONDA_VERSION 4.2.0
 
 USER root
 RUN apt-get update --fix-missing && apt-get install -y \
@@ -12,9 +12,9 @@ RUN apt-get update --fix-missing && apt-get install -y \
     git mercurial subversion \
     python-setuptools htop screen
 
-# Install Anaconda python 3
+# Install Anaconda
 USER $NB_UID
-RUN conda update -y conda
+RUN conda update -y --all
 RUN conda install -c defaults -y anaconda==${ANACONDA_VERSION} && \
     conda clean -tipsy
 

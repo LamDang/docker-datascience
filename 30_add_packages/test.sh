@@ -19,9 +19,5 @@ echo "Test datarobot"
 sudo docker run --rm ${image_name} python -c "from datarobot import *"
 
 
-#sudo docker rm test
-#sudo docker run -d --name test 00_jupyter_setup:test start-noteobok.sh
-#sudo docker stop test && sudo docker rm test
-
 ## Clean up
 sudo docker rmi ${image_name}

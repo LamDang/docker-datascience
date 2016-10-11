@@ -36,4 +36,6 @@ RUN deluser --remove-home jovyan && \
     rm -rf /home/jovyan 
 
 # Switch back to $NB_USER to avoid accidental container runs as root
+
 USER $NB_USER
+RUN conda install conda-build

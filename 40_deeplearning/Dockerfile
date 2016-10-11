@@ -1,4 +1,4 @@
-FROM lamdang/30_add_packages_py35:latest
+FROM lamdang/30_add_packages:latest
 
 MAINTAINER LAM DANG
 

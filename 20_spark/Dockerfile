@@ -1,4 +1,4 @@
-FROM lamdang/10_anaconda_py35:latest
+FROM lamdang/10_anaconda:latest
 
 MAINTAINER Lam Dang
 

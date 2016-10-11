@@ -1,4 +1,4 @@
-FROM lamdang/20_spark_py35:latest
+FROM lamdang/20_spark:latest
 
 MAINTAINER Lam Dang
 
@@ -17,6 +17,7 @@ RUN cd $ADD_PKG_PATH && \
     git clone --recursive https://github.com/dmlc/xgboost && \
     cd xgboost && make -s -j4 && \
     cd python-package && \
+    conda install -y libgcc && \ 
     python setup.py install
 
 ### hyperopt
@@ -29,14 +30,16 @@ USER root
 RUN apt-get update -y && apt-get install -y libboost-program-options-dev \
     zlib1g-dev \
     libboost-python-dev
+
 RUN cd $ADD_PKG_PATH && \
     git clone git://github.com/JohnLangford/vowpal_wabbit.git && \
-    chmod a+rwx vowpal_wabbit && \
-    cd vowpal_wabbit make -s -j4 && make -s install
+    chown -R $NB_UID vowpal_wabbit && \
+    cd vowpal_wabbit && make -s -j4 && make -s install
 
 USER $NB_UID
 RUN cd $ADD_PKG_PATH/vowpal_wabbit/python && \
-    pip install vowpalwabbit
+    python setup.py develop
+#RUN pip install vowpalwabbit
 
 ### gensim
 RUN conda install -y gensim
