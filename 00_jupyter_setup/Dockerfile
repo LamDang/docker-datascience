@@ -38,4 +38,5 @@ RUN deluser --remove-home jovyan && \
 # Switch back to $NB_USER to avoid accidental container runs as root
 
 USER $NB_USER
-RUN conda install conda-build
+RUN conda update --all python=2.7 && \
+    conda install conda-build
