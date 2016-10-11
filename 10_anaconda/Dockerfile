@@ -12,7 +12,7 @@ RUN apt-get update --fix-missing && apt-get install -y \
     git mercurial subversion \
     python-setuptools htop screen
 
-# Install Anaconda python 3
+# Install Anaconda
 USER $NB_UID
 RUN conda update -y conda
 RUN conda install -c defaults -y anaconda==${ANACONDA_VERSION} && \
@@ -34,7 +34,7 @@ RUN cat /tmp/jupyter_custom.js >> $CONDA_DIR/lib/python3.5/site-packages/noteboo
 
 # Create kernel
 USER $NB_UID
-RUN python -m ipykernel install --prefix=$CONDA_DIR --display-name "Python 3"
+RUN python -m ipykernel install --prefix=$CONDA_DIR --display-name "Python 2"
 
 USER $NB_USER
 
