@@ -1,5 +1,5 @@
 #! /bin/bash
-image_name="00_jupyter_setup:test"
+image_name="00_jupyter_setup_py27:test"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 ## Build tests

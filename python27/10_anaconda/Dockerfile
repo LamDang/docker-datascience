@@ -1,4 +1,4 @@
-FROM lamdang/00_jupyter_setup:latest
+FROM lamdang/00_jupyter_setup_py27:latest
 
 MAINTAINER Lam Dang
 
@@ -12,18 +12,15 @@ RUN apt-get update --fix-missing && apt-get install -y \
     git mercurial subversion \
     python-setuptools htop screen
 
-# Install Anaconda python 3
+# Install Anaconda
 USER $NB_UID
-RUN conda update -y conda
+RUN conda update -y --all
 RUN conda install -c defaults -y anaconda==${ANACONDA_VERSION} && \
     conda clean -tipsy
 
-RUN conda install nomkl numpy scipy scikit-learn numexpr && \
-    conda remove mkl mkl-service
-
 # Create kernel
 USER $NB_UID
-RUN python -m ipykernel install --prefix=$CONDA_DIR --display-name "Python 3"
+RUN python -m ipykernel.kernelspec --prefix=$CONDA_DIR
 
 USER $NB_USER
 

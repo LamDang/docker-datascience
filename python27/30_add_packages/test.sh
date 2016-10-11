@@ -1,6 +1,6 @@
 #! /bin/bash
 ## Build tests
-image_name="20_add_packages:test"
+image_name="30_add_packages:test"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 echo "Building test image"
@@ -15,6 +15,8 @@ echo "Test vw"
 sudo docker run --rm ${image_name} python -c "from vowpalwabbit import *"
 echo "Test gensim"
 sudo docker run --rm ${image_name} python -c "from gensim import *"
+echo "Test datarobot"
+sudo docker run --rm ${image_name} python -c "from datarobot import *"
 
 
 #sudo docker rm test

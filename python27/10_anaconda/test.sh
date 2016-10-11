@@ -1,16 +1,14 @@
 #! /bin/bash
 ## Build tests
-image_name="21_spark:test"
+image_name="10_anaconda_py27:test"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 echo "Building test image"
 sudo docker build -t ${image_name} $DIR
 
 ## Run tests
-echo "Test spark version"
-sudo docker run --rm ${image_name} /usr/local/spark/bin/spark-submit --version
-#echo "Test pyspark python3"
-#sudo docker run --rm ${image_name} /usr/local/spark/bin/pyspark 
+echo "Test anaconda version"
+sudo docker run --rm ${image_name} conda list anaconda$
 #echo "Test jupyter"
 #sudo docker rm test
 #sudo docker run -d --name test 00_jupyter_setup:test start-noteobok.sh
