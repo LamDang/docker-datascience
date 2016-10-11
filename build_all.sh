@@ -1,4 +1,6 @@
-for dir in $(ls -d */):
+suffix=$1
+for dir in $(ls -d */)
 do
-	docker build -t lamdang/${dir: :-1} ${dir}
+	echo $dir
+	docker build -t lamdang/${dir: :-1}${suffix} ${dir}
 done
