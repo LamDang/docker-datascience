@@ -20,7 +20,7 @@ RUN conda install -c defaults -y anaconda==${ANACONDA_VERSION} && \
 
 # Create kernel
 USER $NB_UID
-RUN python -m ipykernel.kernelspec --prefix=$CONDA_DIR
+RUN python -m ipykernel install --prefix=$CONDA_DIR --display-name "Python 3"
 
 USER $NB_USER
 

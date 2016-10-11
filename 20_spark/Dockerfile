@@ -21,7 +21,7 @@ RUN apt-get -y update && \
 
 # Download Spark
 RUN cd /tmp && \
-    wget -q ${SPARK_URL} && \
+    wget ${SPARK_URL} && \
     echo "${SPARK_MD5HASH} *spark-${SPARK_VERSION}-bin-hadoop2.6.tgz" | md5sum -c -
 
 # Extract Spark
