@@ -52,6 +52,6 @@ USER $NB_UID
 RUN jq --arg v "$CONDA_DIR/bin/python" \
         '.["env"]["PYSPARK_PYTHON"]=$v' \
         $CONDA_DIR/share/jupyter/kernels/python3/kernel.json > /tmp/kernel.json && \
-        mv /tmp/kernel.json $CONDA_DIR/share/jupyter/kernels/python3/kernel.json
+        mv /tmp/kernel.json $CONDA_DIR/share/jupyter/kernels/python2/kernel.json
 
 USER $NB_USER
