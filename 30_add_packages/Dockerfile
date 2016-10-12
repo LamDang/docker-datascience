@@ -27,7 +27,7 @@ RUN cd $ADD_PKG_PATH && \
 
 ### vowpal wabbit
 USER root
-RUN apt-get update -y && apt-get install -y libboost-program-options-dev \
+RUN apt-get update -y --fix-missing && apt-get install -y libboost-program-options-dev \
     zlib1g-dev \
     libboost-python-dev
 
