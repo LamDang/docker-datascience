@@ -1,4 +1,4 @@
-FROM lamdang/20_spark:latest
+FROM 20_spark:latest
 
 MAINTAINER Lam Dang
 
@@ -46,6 +46,40 @@ RUN conda install -y gensim
 
 ### datarobot api
 RUN pip install datarobot
+
+### Update scikit-learn
+RUN conda install -y scikit-learn=0.18.1=np111py35_0
+
+### LightGBM
+USER root
+RUN apt-get install -yq cmake
+
+USER $NB_UID
+RUN cd $ADD_PKG_PATH && \
+    git clone --recursive https://github.com/Microsoft/LightGBM && \
+    cd LightGBM && mkdir build && cd build && \
+    cmake .. && make -j && \
+    cd ../python-package && python setup.py install
+
+### dask distributed
+RUN conda install -y dask distributed -c conda-forge
+
+### pandas profiling
+RUN conda install pandas-profiling
+
+### fastText
+RUN cd $ADD_PKG_PATH && \ 
+    git clone https://github.com/facebookresearch/fastText.git && \
+    cd fastText && make
+RUN pip install fastText
+
+### Viz: wordcloud, graphviz, pydot
+USER root
+RUN apt-get install -y graphviz
+
+USER $NB_UID
+RUN conda install -y graphviz seaborn
+RUN conda install -y -c amueller wordcloud
 
 USER $NB_USER
 

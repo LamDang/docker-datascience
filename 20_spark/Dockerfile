@@ -1,10 +1,10 @@
-FROM lamdang/10_anaconda:latest
+FROM 10_anaconda:latest
 
 MAINTAINER Lam Dang
 
-ENV SPARK_VERSION 1.6.2
+ENV SPARK_VERSION 2.1.0
 ENV SPARK_URL http://www.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop2.6.tgz
-ENV SPARK_MD5HASH 604936F2BD8AF999D0D624B370F5C4B1
+ENV SPARK_MD5HASH 186765A95838602ED81EA4E9270561F8
 
 #Install jq to deal with json kernel
 USER root 
@@ -14,8 +14,16 @@ RUN apt-get -yqq update && \
     rm -rf /var/lib/apt/lists/*
 
 # Spark dependencies
-RUN apt-get -y update && \
-    apt-get install -y --no-install-recommends openjdk-7-jre-headless && \
+#RUN apt-get -y update && \
+#    apt-get install -y --no-install-recommends openjdk-8-jre-headless && \
+#    apt-get clean && \
+#    rm -rf /var/lib/apt/lists/*
+
+# Temporarily add jessie backports to get openjdk 8, but then remove that source
+RUN echo 'deb http://cdn-fastly.deb.debian.org/debian jessie-backports main' > /etc/apt/sources.list.d/jessie-backports.list && \
+    apt-get -y update && \
+    apt-get install -y --no-install-recommends openjdk-8-jre-headless && \
+    rm /etc/apt/sources.list.d/jessie-backports.list && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 

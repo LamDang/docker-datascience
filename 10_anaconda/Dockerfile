@@ -1,4 +1,4 @@
-FROM lamdang/00_jupyter_setup:latest
+FROM 00_jupyter_setup:latest
 
 MAINTAINER Lam Dang
 
@@ -18,8 +18,19 @@ RUN conda update -y conda
 RUN conda install -c defaults -y anaconda==${ANACONDA_VERSION} && \
     conda clean -tipsy
 
-RUN conda install nomkl numpy scipy scikit-learn numexpr && \
-    conda remove mkl mkl-service
+# RUN conda install nomkl numpy scipy scikit-learn numexpr && \
+#     conda remove mkl mkl-service
+
+# Jupyter Lab
+RUN conda install -y -c conda-forge jupyterlab
+
+# Jupyter extension
+RUN conda install -c conda-forge jupyter_contrib_nbextensions
+
+USER root
+COPY jupyter_custom.js /tmp/
+RUN cat /tmp/jupyter_custom.js >> $CONDA_DIR/lib/python3.5/site-packages/notebook/static/custom/custom.js && \
+    rm /tmp/jupyter_custom.js
 
 # Create kernel
 USER $NB_UID

@@ -1,4 +1,4 @@
-FROM lamdang/30_add_packages:latest
+FROM 30_add_packages:latest
 
 MAINTAINER LAM DANG
 
@@ -10,9 +10,10 @@ LABEL com.nvidia.volumes.needed="nvidia_driver"
 ### COPY FROM NVIDIA-DOCKER ###
 ###############################
 
-ENV CUDA_VERSION 7.5
-ENV CUDA_PKG_VERSION 7-5=7.5-18
+ENV CUDA_VERSION 8.0
+ENV CUDA_PKG_VERSION 8-0=8.0.44-1
 ENV CUDNN_VERSION 5.1
+LABEL com.nvidia.cuda.version="8.0"
 
 # Add CUDA Repo
 USER root
@@ -75,13 +76,6 @@ ENV LIBRARY_PATH /usr/local/cuda/lib64/stubs:${LIBRARY_PATH}
 # Install CuDNN
 USER root
 
-#RUN CUDNN_DOWNLOAD_SUM=40d506d0a8a00a3faccce1433346806b8cd2535683b6f08a63683ce6e474419f && \
-#    curl -fsSL http://developer.download.nvidia.com/compute/redist/cudnn/v5.1/cudnn-7.5-linux-x64-v5.1.tgz -O && \
-#    echo "$CUDNN_DOWNLOAD_SUM  cudnn-7.5-linux-x64-v5.1.tgz" | sha256sum -c --strict - && \
-#    tar -xzf cudnn-7.5-linux-x64-v5.1.tgz -C /usr/local --wildcards 'cuda/lib64/libcudnn.so.*' && \
-#    rm cudnn-7.5-linux-x64-v5.1.tgz && \
-#    ldconfig
-
 RUN echo "deb http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1404/x86_64 /" > /etc/apt/sources.list.d/nvidia-ml.list
 RUN apt-get update && apt-get install -y --no-install-recommends --force-yes \
             libcudnn5 libcudnn5-dev && \
@@ -122,7 +116,12 @@ USER root
 RUN apt-get update && apt-get install -y python-dev python-pip 
 
 USER $NB_USER
-RUN export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow-0.11.0rc0-cp35-cp35m-linux_x86_64.whl && \
+RUN export TF_BINARY_URL=https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-0.12.1-cp35-cp35m-linux_x86_64.whl && \
     pip install --ignore-installed --upgrade $TF_BINARY_URL 
+
+# Install TFLearn
+
+USER $NB_USER
+RUN pip install git+https://github.com/tflearn/tflearn.git
 
 
