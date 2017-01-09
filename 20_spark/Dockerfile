@@ -51,11 +51,7 @@ ENV YARN_CONF_DIR /usr/local/spark/conf/yarn_conf
 USER $NB_UID
 RUN jq --arg v "$CONDA_DIR/bin/python" \
         '.["env"]["PYSPARK_PYTHON"]=$v' \
-<<<<<<< HEAD
         $CONDA_DIR/share/jupyter/kernels/python2/kernel.json > /tmp/kernel.json && \
-=======
-        $CONDA_DIR/share/jupyter/kernels/python3/kernel.json > /tmp/kernel.json && \
->>>>>>> 7b65044880160b340df73e51eef29dc3f2d62a73
         mv /tmp/kernel.json $CONDA_DIR/share/jupyter/kernels/python2/kernel.json
 
 USER $NB_USER
