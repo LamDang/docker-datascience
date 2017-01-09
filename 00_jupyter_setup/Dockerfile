@@ -38,6 +38,10 @@ RUN deluser --remove-home jovyan && \
 # Switch back to $NB_USER to avoid accidental container runs as root
 
 USER $NB_USER
+<<<<<<< HEAD
 RUN conda uninstall jupyterhub && \
     conda install python=2.7 && \
+=======
+RUN conda update --all python=2.7 && \
+>>>>>>> 7b65044880160b340df73e51eef29dc3f2d62a73
     conda install conda-build
