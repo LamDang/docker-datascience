@@ -48,7 +48,7 @@ RUN conda install -y gensim
 RUN pip install datarobot
 
 ### Update scikit-learn
-RUN conda install -y scikit-learn=0.18.1=np111py35_0
+RUN conda install -y scikit-learn=0.18.1=np111py27_0
 
 ### LightGBM
 USER root

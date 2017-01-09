@@ -29,7 +29,7 @@ RUN conda install -c conda-forge jupyter_contrib_nbextensions
 
 USER root
 COPY jupyter_custom.js /tmp/
-RUN cat /tmp/jupyter_custom.js >> $CONDA_DIR/lib/python3.5/site-packages/notebook/static/custom/custom.js && \
+RUN cat /tmp/jupyter_custom.js >> $CONDA_DIR/lib/python2.7/site-packages/notebook/static/custom/custom.js && \
     rm /tmp/jupyter_custom.js
 
 # Create kernel
