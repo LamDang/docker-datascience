@@ -10,7 +10,7 @@ docker build -t ${image_name} $DIR
 echo "Test spark version"
 docker run --rm ${image_name} /usr/local/spark/bin/spark-submit --version
 #echo "Test pyspark python3"
-#sudo docker run --rm ${image_name} /usr/local/spark/bin/pyspark 
+docker run --rm ${image_name} python -c "from pyspark.sql import SparkSession" 
 #echo "Test jupyter"
 #sudo docker rm test
 #sudo docker run -d --name test 00_jupyter_setup:test start-noteobok.sh
