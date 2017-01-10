@@ -40,7 +40,7 @@ RUN cd /usr/local && ln -s spark-${SPARK_VERSION}-bin-hadoop2.6 spark
 
 # Spark config
 ENV SPARK_HOME /usr/local/spark
-ENV PYTHONPATH $PYTHONPATH:$SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.9-src.zip
+ENV PYTHONPATH $PYTHONPATH:$SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.10.4-src.zip
 ENV SPARK_OPTS --driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info
 
 # Create folder to mount YARN config files
