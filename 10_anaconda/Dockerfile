@@ -18,6 +18,7 @@ RUN conda update -y conda
 RUN conda install -c defaults -y anaconda==${ANACONDA_VERSION} && \
     conda clean -tipsy
 
+RUN conda update mkl
 # RUN conda install nomkl numpy scipy scikit-learn numexpr && \
 #     conda remove mkl mkl-service
 
