@@ -1,4 +1,3 @@
-#FROM 20_spark:latest
 FROM 10_anaconda:latest
 MAINTAINER Lam Dang
 
