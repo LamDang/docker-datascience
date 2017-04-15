@@ -1,6 +1,6 @@
 #! /bin/bash
 ## Build tests
-image_name="30_add_packages:test"
+image_name="20_add_packages:test"
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 echo "Building test image"
