@@ -45,6 +45,11 @@ RUN jupyter nbextension enable execute_time/ExecuteTime && \
     jupyter nbextension enable collapsible_headings/main && \
     jupyter nbextension enable toc2/main
 
+# PATCH jupyter crash with keras progress bar
+RUN conda install -yq notebook=4.2.3
+RUN pip install keras_tqdm
+
+
 COPY start.sh /usr/local/bin/
 COPY start-notebook.sh /usr/local/bin/
 CMD ["start-notebook.sh"]

@@ -14,7 +14,9 @@ RUN apt-get update && apt-get install -yq \
     htop \
     screen \
     unzip \
-    pigz
+    pigz \
+    nano \
+    vim 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install Tini
