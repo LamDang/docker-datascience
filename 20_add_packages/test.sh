@@ -18,6 +18,5 @@ docker run --rm ${image_name} python -c "from gensim import *"
 echo "Test datarobot"
 docker run --rm ${image_name} python -c "from datarobot import *"
 
-
 ## Clean up
 docker rmi ${image_name}
