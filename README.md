@@ -19,9 +19,20 @@ Each step should be independent and provide a runnable image.
 * `-e NB_UID=[your_uid] --user root` - Set notebook user UID. This is important to control the permissions of files mounted from host or future files created by the container
 * `-v [host_absolute_path]:[container_absolute_path]` - Mount a host folder to container. It is recommended to use absolute path to avoid confusion
 
-#### Spark options:
-* **--net host** - When run Spark on YARN, Spark will communicate with YARN cluster with the IP of the container. One can either setup bridge network to make container visible to YARN cluster or let it use host network interface
-* Spark installation in this docker does not contain configuration to work with HADOOP cluster. One can mount the necessary *conf* folder to /usr/local/spark/conf to setup Spark configuration with HADOOP
+#### Integrate Spark to Jupyter Notebook:
+* Deploy Spark to host server using Hadoop distribution
+* When launching container:
+    * Mount the following folders:
+        * Spark installation folder
+        * Yarn and Hive config folder
+    * Network:
+        * Set hostname of container to server hostname
+        * Open a range of ports for Spark components
+    * Set environment variables:
+        * SPARK_HOME
+        * YARN_CONF_DIR
+        * PYTHON_PATH: to include $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.10.4-src.zip
+        * PYSPARK_PYTHON: path to Python ($CONDA_DIR/bin/python)
 
 #### Run Jupyter with GPU & CUDA deep learning:
 * **Prerequisites:**
