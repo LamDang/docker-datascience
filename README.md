@@ -9,13 +9,13 @@ Each step should be independent and provide a runnable image.
 
 ## User guide
 ### Launch a Jupyter Notebook server
-`sudo docker run` [Docker Options](docker-options) [Image Name] `start-notebook.sh` [Notebook Options]
+`sudo docker run` [Docker Options] [Image Name] `start-notebook.sh` [Notebook Options]
 
 ### Docker Options:
 #### Standard options:
 * `-d --restart=unless-stopped` - Run in detached mode and always restart container except manually stopped
 * `-p [host_port]:[contaier_port]` - Map container port to specific host port
-* `-e PASSWORD=[your_passwd] -e USE_HTTPS=yes` - Set password. It is recommended to always use HTTPS when password is set.
+* `-e GEN_CERT=yes` - Use HTTPS - certificates is automatically generated.
 * `-e NB_UID=[your_uid] --user root` - Set notebook user UID. This is important to control the permissions of files mounted from host or future files created by the container
 * `-v [host_absolute_path]:[container_absolute_path]` - Mount a host folder to container. It is recommended to use absolute path to avoid confusion
 
