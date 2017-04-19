@@ -39,7 +39,10 @@ Each step should be independent and provide a runnable image.
   * Have CUDA capable GPU installed with driver
   * Install CUDA toolkit
   * Install nvidia-docker and nvidia-docker-plugin: https://github.com/NVIDIA/nvidia-docker/wiki/Installation
-* **How:** Run container as usual by replacing _sudo docker_ with _sudo nvidia-docker_  
+* **How:** 
+  * Using nvidia-docker wrapper: Run container as usual by replacing _sudo docker_ with _sudo nvidia-docker_  
+  * Without wrapper:
+    * Cf. details in: https://github.com/NVIDIA/nvidia-docker/wiki/NVIDIA-driver#alternatives
 
 ### Notebook options
 * Password: `--NotebookApp.password='sha1:....'` (use hashed password)
