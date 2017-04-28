@@ -52,4 +52,9 @@ RUN pip install keras_tqdm
 
 COPY start.sh /usr/local/bin/
 COPY start-notebook.sh /usr/local/bin/
+
+# Add permission on executables
+USER root
+RUN chmod +x /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start-notebook.sh
 CMD ["start-notebook.sh"]
