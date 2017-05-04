@@ -16,6 +16,7 @@ Each step should be independent and provide a runnable image.
 * `-d --restart=unless-stopped` - Run in detached mode and always restart container except manually stopped
 * `-p [host_port]:[contaier_port]` - Map container port to specific host port
 * `-e GEN_CERT=yes` - Use HTTPS - certificates is automatically generated.
+* `-e GRANT_SUDO=yes` - NOT SECURED: give passwordless sudo to user
 * `-e NB_UID=[your_uid] --user root` - Set notebook user UID. This is important to control the permissions of files mounted from host or future files created by the container
 * `-v [host_absolute_path]:[container_absolute_path]` - Mount a host folder to container. It is recommended to use absolute path to avoid confusion
 
