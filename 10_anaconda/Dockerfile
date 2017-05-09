@@ -33,11 +33,6 @@ RUN conda install -c defaults -y anaconda==${ANACONDA_VERSION} && \
 COPY jupyter_notebook_config.py /home/$NB_USER/.jupyter/
 COPY jupyter_custom.js /tmp/
 
-USER root
-RUN cat /tmp/jupyter_custom.js >> $CONDA_DIR/lib/python3.5/site-packages/notebook/static/custom/custom.js && \
-    rm /tmp/jupyter_custom.js
-
-USER $NB_USER
 RUN python -m ipykernel install --prefix=$CONDA_DIR --display-name "Python 3"
 # Jupyter Lab
 RUN conda install -yq -c conda-forge jupyterlab jupyter_contrib_nbextensions
@@ -49,12 +44,15 @@ RUN jupyter nbextension enable execute_time/ExecuteTime && \
 RUN conda install -yq notebook=4.2.3
 RUN pip install keras_tqdm
 
-
 COPY start.sh /usr/local/bin/
 COPY start-notebook.sh /usr/local/bin/
 
-# Add permission on executables
 USER root
+# Add script to resume notebook output
+RUN cat /tmp/jupyter_custom.js >> $CONDA_DIR/lib/python3.5/site-packages/notebook/static/custom/custom.js && \
+    rm /tmp/jupyter_custom.js
+
+# Add permission on executables
 RUN chmod +x /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start-notebook.sh
 CMD ["start-notebook.sh"]
