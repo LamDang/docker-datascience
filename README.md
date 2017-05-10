@@ -31,7 +31,6 @@ Each step should be independent and provide a runnable image.
         * Open a range of ports for Spark components
     * Set environment variables:
         * SPARK_HOME
-        * YARN_CONF_DIR
         * PYTHON_PATH: to include $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.10.4-src.zip
         * PYSPARK_PYTHON: path to Python ($CONDA_DIR/bin/python)
 
