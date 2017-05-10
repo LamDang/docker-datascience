@@ -52,3 +52,7 @@ USER root
 EXPOSE 8888
 WORKDIR /home/$NB_USER/datalab/
 ENTRYPOINT ["tini", "--"]
+
+# Add jdk
+USER root
+RUN apt-get update -yqq && apt-get install -yq openjdk-8-jdk-headless
