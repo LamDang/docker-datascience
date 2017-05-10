@@ -1,23 +1,21 @@
-FROM 20_spark:latest
-
+FROM 10_anaconda:latest
 MAINTAINER Lam Dang
 
 # Setup folder for non-Anaconda packages
 USER root
 
-RUN mkdir /usr/local/additional_packages && \
-    chown -R $NB_UID /usr/local/additional_packages
 ENV ADD_PKG_PATH /usr/local/additional_packages
+RUN mkdir -m 777 ${ADD_PKG_PATH}
+RUN apt-get install -yq cmake g++
 
 # Install additional packages
-USER $NB_UID
-
+USER $NB_USER
 ### xgboost
 RUN cd $ADD_PKG_PATH && \
     git clone --recursive https://github.com/dmlc/xgboost && \
     cd xgboost && make -s -j4 && \
     cd python-package && \
-    conda install -y libgcc && \ 
+    conda install -y libgcc && \
     python setup.py install
 
 ### hyperopt
@@ -33,13 +31,12 @@ RUN apt-get update -y && apt-get install -y libboost-program-options-dev \
 
 RUN cd $ADD_PKG_PATH && \
     git clone git://github.com/JohnLangford/vowpal_wabbit.git && \
-    chown -R $NB_UID vowpal_wabbit && \
+    chown -R $NB_USER:$NB_USER vowpal_wabbit && \
     cd vowpal_wabbit && make -s -j4 && make -s install
 
-USER $NB_UID
+USER $NB_USER
 RUN cd $ADD_PKG_PATH/vowpal_wabbit/python && \
     python setup.py develop
-#RUN pip install vowpalwabbit
 
 ### gensim
 RUN conda install -y gensim
@@ -47,39 +44,33 @@ RUN conda install -y gensim
 ### datarobot api
 RUN pip install datarobot
 
-### Update scikit-learn
-RUN conda install -y scikit-learn=0.18.1=np111py35_0
-
 ### LightGBM
-USER root
-RUN apt-get install -yq cmake
-
-USER $NB_UID
+USER $NB_USER
 RUN cd $ADD_PKG_PATH && \
     git clone --recursive https://github.com/Microsoft/LightGBM && \
     cd LightGBM && mkdir build && cd build && \
-    cmake .. && make -j && \
+    cmake .. && make -j4 && \
     cd ../python-package && python setup.py install
 
 ### dask distributed
 RUN conda install -y dask distributed -c conda-forge
 
 ### pandas profiling
-RUN conda install pandas-profiling
+RUN conda install -y pandas-profiling -c conda-forge
 
 ### fastText
-RUN cd $ADD_PKG_PATH && \ 
+RUN cd $ADD_PKG_PATH && \
     git clone https://github.com/facebookresearch/fastText.git && \
-    cd fastText && make
+    cd fastText && make -j4
 RUN pip install fastText
 
 ### Viz: wordcloud, graphviz, pydot
 USER root
 RUN apt-get install -y graphviz
 
-USER $NB_UID
+USER $NB_USER
 RUN conda install -y graphviz seaborn
 RUN conda install -y -c amueller wordcloud
+RUN conda install -y -c conda-forge fastparquet
 
 USER $NB_USER
-
