@@ -4,7 +4,7 @@ MAINTAINER Lam Dang
 
 USER root
 # Setup env
-ENV ANACONDA_VERSION 4.3.1
+ENV ANACONDA_VERSION 4.4.0
 ENV CONDA_DIR /opt/conda
 ENV PATH $CONDA_DIR/bin:$PATH
 
@@ -40,10 +40,11 @@ RUN jupyter nbextension enable execute_time/ExecuteTime && \
     jupyter nbextension enable collapsible_headings/main && \
     jupyter nbextension enable toc2/main
 
-# PATCH jupyter crash with keras progress bar
-RUN conda install -yq notebook=4.2.3
-RUN pip install keras_tqdm
+# patch ipython
+RUN conda update ipython && conda install jedi
+RUN pip install tqdm
 
+# jupyter run script
 COPY start.sh /usr/local/bin/
 COPY start-notebook.sh /usr/local/bin/
 

@@ -6,7 +6,7 @@ USER root
 
 ENV ADD_PKG_PATH /usr/local/additional_packages
 RUN mkdir -m 777 ${ADD_PKG_PATH}
-RUN apt-get install -yq cmake g++
+RUN apt-get update -y && apt-get install -yq cmake g++
 
 # Install additional packages
 USER $NB_USER
@@ -69,8 +69,11 @@ USER root
 RUN apt-get install -y graphviz
 
 USER $NB_USER
-RUN conda install -y graphviz seaborn
+RUN conda install -y graphviz seaborn pydotplus
 RUN conda install -y -c amueller wordcloud
 RUN conda install -y -c conda-forge fastparquet
+
+### OpenCV
+RUN conda install -y opencv
 
 USER $NB_USER
