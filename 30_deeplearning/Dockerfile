@@ -117,10 +117,8 @@ USER root
 RUN apt-get update && apt-get install -y python-dev python-pip libcupti-dev
 
 USER $NB_USER
-ENV TF_BINARY_URL https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.0.1-cp35-cp35m-linux_x86_64.whl
+# RUN pip install --upgrade tensorflow-gpu
+ENV TF_BINARY_URL https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.2.1-cp35-cp35m-linux_x86_64.whl
 RUN pip install --ignore-installed --upgrade $TF_BINARY_URL
-
-# Install TFLearn
-
-USER $NB_USER
-RUN pip install git+https://github.com/tflearn/tflearn.git
+# Reinstall numpy to fix mkl linkage
+RUN conda install -f -y numpy

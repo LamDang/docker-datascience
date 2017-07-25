@@ -17,6 +17,8 @@ echo "Test gensim"
 docker run --rm ${image_name} python -c "from gensim import *"
 echo "Test datarobot"
 docker run --rm ${image_name} python -c "from datarobot import *"
+echo "Test mkl"
+docker run --rm ${image_name} python -c "from sklearn.tests.test_kernel_ridge import test_kernel_ridge; test_kernel_ridge()"
 
 ## Clean up
 docker rmi ${image_name}

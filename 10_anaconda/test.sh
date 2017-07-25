@@ -11,8 +11,14 @@ echo "Building test image"
 docker build -t ${image_name} $DIR
 
 ## Run tests
+echo "Test python version py3"
+docker run --rm ${image_name} python -V
+
 echo "Test anaconda version py3"
-docker run --rm ${image_name} conda list anaconda$
+docker run --rm ${image_name} conda list anaconda
+
+echo "Test mkl"
+docker run --rm ${image_name} python -c "from sklearn.tests.test_kernel_ridge import test_kernel_ridge; test_kernel_ridge()"
 
 ## Clean up
 docker rmi ${image_name}
