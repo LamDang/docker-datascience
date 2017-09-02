@@ -15,45 +15,46 @@ RUN apt-get update --fix-missing && apt-get install -y \
     git mercurial subversion \
     python-setuptools htop screen
 
-# Install Anaconda python 3
-USER $NB_USER
+# Install Miniconda python 3
+USER root
 RUN cd /tmp && \
-    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.2.12-Linux-x86_64.sh && \
-    /bin/bash Miniconda3-4.2.12-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
-    rm Miniconda3-4.2.12-Linux-x86_64.sh && \
+    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
+    /bin/bash Miniconda3-latest-Linux-x86_64.sh -f -b -p $CONDA_DIR && \
+    rm Miniconda3-latest-Linux-x86_64.sh && \
     $CONDA_DIR/bin/conda config --system --set auto_update_conda false && \
     conda clean -tipsy
 
-USER $NB_USER
+# Install Anaconda
 RUN conda update -yq conda
 RUN conda install -c defaults -y anaconda==${ANACONDA_VERSION} && \
     conda clean -tipsy
-
-# Setup Jupyter
-COPY jupyter_notebook_config.py /home/$NB_USER/.jupyter/
-COPY jupyter_custom.js /tmp/
-
 RUN python -m ipykernel install --prefix=$CONDA_DIR --display-name "Python 3"
-# Jupyter Lab
-RUN conda install -yq -c conda-forge jupyterlab jupyter_contrib_nbextensions
+
+# Jupyter add-on
+RUN conda install -yq -c conda-forge \
+    jupyterlab \
+    jupyter_contrib_nbextensions \
+    tqdm
 RUN jupyter nbextension enable execute_time/ExecuteTime && \
     jupyter nbextension enable collapsible_headings/main && \
     jupyter nbextension enable toc2/main
-
-# patch ipython
+# patch ipython to 6.
 RUN conda update ipython && conda install jedi
-RUN pip install tqdm
 
-# jupyter run script
+# Config Jupyter
+USER root
+COPY jupyter_notebook_config.py /home/$NB_USER/.jupyter/
+# Add script to resume notebook output
+COPY jupyter_custom.js /tmp/
+RUN cat /tmp/jupyter_custom.js >> \
+    $CONDA_DIR/lib/python3.6/site-packages/notebook/static/custom/custom.js && \
+    rm /tmp/jupyter_custom.js
+# Add permission on executables
 COPY start.sh /usr/local/bin/
 COPY start-notebook.sh /usr/local/bin/
-
-USER root
-# Add script to resume notebook output
-RUN cat /tmp/jupyter_custom.js >> $CONDA_DIR/lib/python3.5/site-packages/notebook/static/custom/custom.js && \
-    rm /tmp/jupyter_custom.js
-
-# Add permission on executables
 RUN chmod +x /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start-notebook.sh
 CMD ["start-notebook.sh"]
+
+# Add conda to path
+RUN echo 'export PATH='${CONDA_DIR}'/bin:$PATH' >> /home/$NB_USER/.bashrc
