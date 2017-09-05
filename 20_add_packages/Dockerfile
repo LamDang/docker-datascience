@@ -42,6 +42,17 @@ RUN conda install -y dask distributed fastparquet
 ## Viz: wordcloud, graphviz, pydot
 RUN conda install -y graphviz seaborn pydotplus pandas-profiling
 RUN conda install -y -c amueller wordcloud
+### bokeh set
+RUN conda install -y bokeh holoviews datashader
+### plotly set
+RUN pip install \
+    dash==0.17.7 \
+    dash-renderer==0.7.4 \
+    dash-html-components==0.7.0 \
+    dash-core-components==0.12.4 \
+    plotly==2.0.15
+### brunel
+RUN pip install brunel
 
 # Cleanup
 RUN conda clean -tipsy
