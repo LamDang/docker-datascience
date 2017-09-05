@@ -54,35 +54,6 @@ RUN pip install \
 ### brunel
 RUN pip install brunel
 
-# add packages for  images transfo. add ssh server to allow the usage of distant ide on the server
-
-RUN apt-get update && \
-	apt-get install -y python-poppler \
-	unrtf \
-	unrar-free \
-	ghostscript \
-	openssh-server \
-	gnumeric 
-
-### install octo packages 
-RUN conda install jellyfish python-Levenshtein python-igraph fuzzywuzzy -y
-
-
-###install dash and brunel for dataviz
-
-RUN  pip install dash \
-	dash-renderer \
-	dash-html-components \
-	dash-core-components \
-	plotly \
-	brunel
-
-### add semisupp, imbalanced learning , lifelines
-
-RUN conda install -c conda-forge lifelines nlopt -y && conda install -c glemaitre imbalanced-learn -y 
-RUN mkdir /semisupp && cd /semisupp && wget https://github.com/tmadl/semisup-learn/archive/master.zip && unzip master.zip && cd semisup-learn-master/ && chmod +x setup.py && ./setup.py install
-
-
 # Cleanup
-RUN conda clean -tipsy && apt-get clean
+RUN conda clean -tipsy
 USER $NB_USER
