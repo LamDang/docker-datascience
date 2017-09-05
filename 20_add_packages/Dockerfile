@@ -40,7 +40,9 @@ RUN conda install -y opencv
 RUN conda install -y dask distributed fastparquet
 
 ## Viz: wordcloud, graphviz, pydot
-RUN conda install -y graphviz seaborn pydotplus pandas-profiling
+RUN conda install -y \
+    graphviz python-graphviz pydotplus \
+    seaborn pandas-profiling
 RUN conda install -y -c amueller wordcloud
 ### bokeh set
 RUN conda install -y bokeh holoviews datashader
