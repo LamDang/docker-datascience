@@ -73,5 +73,5 @@ RUN mkdir /semisupp && cd /semisupp && wget https://github.com/tmadl/semisup-lea
 
 
 # Cleanup
-RUN conda clean -tipsy
+RUN conda clean -tipsy && apt-get clean
 USER $NB_USER

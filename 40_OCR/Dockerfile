@@ -77,6 +77,8 @@ cd tesseract && \
  make training && \
  make training-install
 
+RUN conda clean -tipsy && apt-get clean
+
 USER $NB_USER
 
 
