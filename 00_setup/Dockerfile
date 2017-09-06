@@ -17,7 +17,8 @@ RUN apt-get update && apt-get install -yq \
     pigz \
     nano \
     vim \
-    openjdk-8-jdk-headless
+    openjdk-8-jdk-headless \
+    openssh-server 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install Tini
