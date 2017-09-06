@@ -60,6 +60,11 @@ RUN pip install brunel
 ### Some specialized pkgs
 RUN conda install -c conda-forge lifelines nlopt -y && \
     conda install -c glemaitre imbalanced-learn -y
+RUN conda install -y -c conda-forge \
+    jellyfish \
+    python-Levenshtein \
+    python-igraph \
+    fuzzywuzzy
 
 # Cleanup
 RUN conda clean -tipsy
