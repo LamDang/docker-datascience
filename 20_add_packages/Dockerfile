@@ -23,10 +23,6 @@ RUN cd $ADD_PKG_PATH && \
 ### datarobot api
 RUN pip install datarobot
 
-### Some specialized pkgs
-RUN conda install -c conda-forge lifelines nlopt -y && \
-    conda install -c glemaitre imbalanced-learn -y
-
 ## NLP
 RUN conda install -y gensim && \
     conda install -c conda-forge spacy
@@ -41,7 +37,8 @@ RUN pip install fastText
 RUN conda install -y opencv
 
 ## Distributed Computing
-RUN conda install -y dask distributed fastparquet
+RUN conda install -y dask distributed fastparquet && \
+    conda install -y -c conda-forge pyarrow
 
 ## Viz: wordcloud, graphviz, pydot
 RUN conda install -y \
@@ -59,6 +56,10 @@ RUN pip install \
     plotly==2.0.15
 ### brunel
 RUN pip install brunel
+
+### Some specialized pkgs
+RUN conda install -c conda-forge lifelines nlopt -y && \
+    conda install -c glemaitre imbalanced-learn -y
 
 # Cleanup
 RUN conda clean -tipsy
