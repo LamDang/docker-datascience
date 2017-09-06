@@ -15,7 +15,8 @@ echo "Test keras w theano"
 nvidia-docker run --rm ${image_name} bash -c "KERAS_BACKEND=theano \
     python -c 'import keras; print(keras.__version__)'"
 echo "Test tensorflow"
-nvidia-docker run --rm ${image_name} python -c "import tensorflow"
+nvidia-docker run --rm ${image_name} python -c \
+    "import tensorflow; print(tensorflow.__version__)"
 echo "Test mkl"
 docker run --rm ${image_name} python -c "from sklearn.tests.test_kernel_ridge import test_kernel_ridge; test_kernel_ridge()"
 
