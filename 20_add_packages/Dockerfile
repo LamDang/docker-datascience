@@ -23,6 +23,10 @@ RUN cd $ADD_PKG_PATH && \
 ### datarobot api
 RUN pip install datarobot
 
+### Some specialized pkgs
+RUN conda install -c conda-forge lifelines nlopt -y && \
+    conda install -c glemaitre imbalanced-learn -y
+
 ## NLP
 RUN conda install -y gensim && \
     conda install -c conda-forge spacy
