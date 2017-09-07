@@ -37,11 +37,34 @@ RUN pip install fastText
 RUN conda install -y opencv
 
 ## Distributed Computing
-RUN conda install -y dask distributed fastparquet
+RUN conda install -y dask distributed fastparquet && \
+    conda install -y -c conda-forge pyarrow
 
 ## Viz: wordcloud, graphviz, pydot
-RUN conda install -y graphviz seaborn pydotplus pandas-profiling
+RUN conda install -y \
+    graphviz python-graphviz pydotplus \
+    seaborn pandas-profiling
 RUN conda install -y -c amueller wordcloud
+### bokeh set
+RUN conda install -y bokeh holoviews datashader
+### plotly set
+RUN pip install \
+    dash==0.17.7 \
+    dash-renderer==0.7.4 \
+    dash-html-components==0.7.0 \
+    dash-core-components==0.12.4 \
+    plotly==2.0.15
+### brunel
+RUN pip install brunel
+
+### Some specialized pkgs
+RUN conda install -c conda-forge lifelines nlopt -y && \
+    conda install -c glemaitre imbalanced-learn -y
+RUN conda install -y -c conda-forge \
+    jellyfish \
+    python-Levenshtein \
+    python-igraph \
+    fuzzywuzzy
 
 # Cleanup
 RUN conda clean -tipsy
