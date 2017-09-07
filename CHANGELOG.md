@@ -1,5 +1,4 @@
-
-# v2.2.0
+# v2.2.0
 * Major changes:
     * Start semantic versioning MAJOR.MINOR.PATCH
     * New images 40_ocr:
