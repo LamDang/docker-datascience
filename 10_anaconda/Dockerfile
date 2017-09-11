@@ -39,7 +39,7 @@ RUN jupyter nbextension enable execute_time/ExecuteTime && \
     jupyter nbextension enable collapsible_headings/main && \
     jupyter nbextension enable toc2/main
 # patch ipython to 6.
-RUN conda update ipython && conda install jedi
+RUN conda update ipython && conda install -c conda-forge jedi
 
 # Config Jupyter
 USER root
