@@ -47,10 +47,21 @@ RUN cd $ADD_PKG_PATH && \
     ./configure && \
     make -j4 && make install
 
+ENV ADD_PKG_PATH /usr/local/additional_packages
 # Install tesseract
 RUN cd $ADD_PKG_PATH && \
-	git clone https://github.com/tesseract-ocr/tesseract.git && \
-	cd tesseract && \
+	git clone https://github.com/tesseract-ocr/tesseract.git 
+
+RUN cd $ADD_PKG_PATH && mkdir -m 777 tessdata && cd tessdata && \
+    wget -q https://github.com/tesseract-ocr/tessdata/raw/4.00/spa.traineddata && \
+    wget -q https://github.com/tesseract-ocr/tessdata/raw/4.00/spa_old.traineddata && \
+    wget -q https://github.com/tesseract-ocr/tessdata/raw/4.00/fra.traineddata && \
+    wget -q https://github.com/tesseract-ocr/tessdata/raw/4.00/eng.traineddata && \
+    wget -q https://github.com/tesseract-ocr/tessdata/raw/4.00/kur.traineddata
+ENV TESSDATA_PREFIX=$ADD_PKG_PATH/tessdata
+
+
+RUN cd $ADD_PKG_PATH && cd tesseract && \
 	./autogen.sh && \
 	autoreconf --force --install && \
 	./configure && \
@@ -60,13 +71,6 @@ RUN cd $ADD_PKG_PATH && \
     make training-install && \
  	ldconfig
 
-RUN cd $ADD_PKG_PATH && mkdir -m 777 tessdata && cd tessdata && \
-    wget -q https://github.com/tesseract-ocr/tessdata/raw/4.00/spa.traineddata && \
-    wget -q https://github.com/tesseract-ocr/tessdata/raw/4.00/spa_old.traineddata && \
-    wget -q https://github.com/tesseract-ocr/tessdata/raw/4.00/fra.traineddata && \
-    wget -q https://github.com/tesseract-ocr/tessdata/raw/4.00/eng.traineddata && \
-    wget -q https://github.com/tesseract-ocr/tessdata/raw/4.00/kur.traineddata
-ENV TESSDATA_PREFIX=$ADD_PKG_PATH/tessdata
 
 # RUN cd /home/tesseract && \
 #     cd tesseract && \

@@ -38,7 +38,7 @@ RUN conda install -y opencv
 
 ## Distributed Computing
 RUN conda install -y dask distributed fastparquet && \
-    conda install -y -c conda-forge pyarrow
+    conda install -y -c conda-forge pyarrow python-snappy
 
 ## Viz: wordcloud, graphviz, pydot
 RUN conda install -y \

@@ -18,7 +18,8 @@ RUN apt-get update && apt-get install -yq \
     nano \
     vim \
     openjdk-8-jdk-headless \
-    openssh-server 
+    openssh-server \
+	crontab
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install Tini

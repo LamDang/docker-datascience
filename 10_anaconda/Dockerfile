@@ -13,7 +13,7 @@ RUN apt-get update --fix-missing && apt-get install -y \
     wget bzip2 ca-certificates \
     libglib2.0-0 libxext6 libsm6 libxrender1 \
     git mercurial subversion \
-    python-setuptools htop screen
+    python-setuptools htop screen 
 
 # Install Miniconda python 3
 USER root
@@ -38,8 +38,10 @@ RUN conda install -yq -c conda-forge \
 RUN jupyter nbextension enable execute_time/ExecuteTime && \
     jupyter nbextension enable collapsible_headings/main && \
     jupyter nbextension enable toc2/main
-# patch ipython to 6.
-RUN conda update ipython && conda install -c conda-forge jedi
+
+
+# patch ipython to 6. Cancelled, this is not working					
+#RUN conda update ipython && conda install -c conda-forge jedi=0.9.0
 
 # Config Jupyter
 USER root
