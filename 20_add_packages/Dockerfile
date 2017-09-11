@@ -66,6 +66,7 @@ RUN conda install -y -c conda-forge \
     python-igraph \
     fuzzywuzzy
 
+RUN pip install bottle
 # Cleanup
 RUN conda clean -tipsy
 USER $NB_USER
