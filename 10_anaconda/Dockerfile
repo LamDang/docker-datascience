@@ -4,7 +4,7 @@ MAINTAINER Lam Dang
 
 USER root
 # Setup env
-ENV ANACONDA_VERSION 4.4.0
+ENV ANACONDA_VERSION 5.0.1
 ENV CONDA_DIR /opt/conda
 ENV PATH $CONDA_DIR/bin:$PATH
 
@@ -13,7 +13,7 @@ RUN apt-get update --fix-missing && apt-get install -y \
     wget bzip2 ca-certificates \
     libglib2.0-0 libxext6 libsm6 libxrender1 \
     git mercurial subversion \
-    python-setuptools htop screen 
+    python-setuptools htop screen
 
 # Install Miniconda python 3
 USER root
@@ -31,17 +31,14 @@ RUN conda install -c defaults -y anaconda==${ANACONDA_VERSION} && \
 RUN python -m ipykernel install --prefix=$CONDA_DIR --display-name "Python 3"
 
 # Jupyter add-on
+RUN conda install -yq notebook
+
 RUN conda install -yq -c conda-forge \
-    jupyterlab \
     jupyter_contrib_nbextensions \
     tqdm
 RUN jupyter nbextension enable execute_time/ExecuteTime && \
     jupyter nbextension enable collapsible_headings/main && \
     jupyter nbextension enable toc2/main
-
-
-# patch ipython to 6. Cancelled, this is not working					
-#RUN conda update ipython && conda install -c conda-forge jedi=0.9.0
 
 # Config Jupyter
 USER root
