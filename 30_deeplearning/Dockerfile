@@ -10,10 +10,10 @@ MAINTAINER LAM DANG
 
 ENV CUDA_VERSION 8.0
 ENV CUDA_PKG_VERSION 8-0=8.0.61-1
-ENV CUDNN_VERSION 5.1
+ENV CUDNN_VERSION 6
 LABEL com.nvidia.volumes.needed="nvidia_driver"
-LABEL com.nvidia.cuda.version="8.0"
-
+LABEL com.nvidia.cuda.version="${CUDA_VERSION}"
+LABEL com.nvidia.cudnn.version="${CUDNN_VERSION}"
 # Add CUDA Repo
 USER root
 
@@ -52,11 +52,8 @@ USER root
 
 RUN echo "deb http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64 /" > /etc/apt/sources.list.d/nvidia-ml.list
 
-ENV CUDNN_VERSION 5.1.10
-LABEL com.nvidia.cudnn.version="${CUDNN_VERSION}"
-
 RUN apt-get update && apt-get install -y --no-install-recommends \
-            libcudnn5=$CUDNN_VERSION-1+cuda8.0 libcudnn5-dev=$CUDNN_VERSION-1+cuda8.0 && \
+    libcudnn$CUDNN_VERSION libcudnn$CUDNN_VERSION-dev && \
     rm -rf /var/lib/apt/lists/*
 
 ###################
@@ -64,7 +61,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ###################
 
 USER root
-RUN conda install -y tensorflow-gpu keras-gpu && \
-    conda clean -tipsy
+#RUN conda install -y tensorflow-gpu keras-gpu && \
+#    conda clean -tipsy
+RUN pip install https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.4.0-cp36-cp36m-linux_x86_64.whl
+RUN pip install keras
 
 USER $NB_USER
