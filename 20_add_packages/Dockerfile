@@ -66,7 +66,9 @@ RUN conda install -y -c conda-forge \
     python-igraph \
     fuzzywuzzy
 
-RUN pip install bottle
+RUN pip install bottle line_profiler
+RUN conda install -c anaconda coverage pylint
+
 # Cleanup
 RUN conda clean -tipsy
 USER $NB_USER
