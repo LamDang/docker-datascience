@@ -6,7 +6,7 @@ USER root
 
 ENV ADD_PKG_PATH /usr/local/additional_packages
 RUN mkdir -m 777 ${ADD_PKG_PATH}
-RUN apt-get update -y && apt-get install -yq cmake g++
+RUN apt-get update -y && apt-get install -yq cmake g++ libgomp1
 
 # Install additional packages
 # USER $NB_USER
@@ -24,7 +24,7 @@ RUN cd $ADD_PKG_PATH && \
 RUN pip install datarobot
 
 ## NLP
-RUN conda install -y gensim && \
+RUN conda install -y gensim libgcc && \
     conda install -c conda-forge spacy
 
 ### fastText
@@ -68,6 +68,8 @@ RUN conda install -y -c conda-forge \
 
 RUN pip install bottle line_profiler
 RUN conda install -c anaconda coverage pylint
+RUN conda install -c barnybug pg8000 
+
 
 # Cleanup
 RUN conda clean -tipsy

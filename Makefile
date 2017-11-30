@@ -1,6 +1,6 @@
 IMAGE_TAG=2.3                                                                                                                                                                                            
 PORT=8888
-CONATINER_NAME=jupyter
+CONTAINER_NAME=jupyter
 
 
 dirs=$(shell ls -d */ |cut -f1 -d '/')
@@ -20,8 +20,7 @@ clean:
 	@docker rm $(CONTAINER_NAME)
 	
 
-test:
-	@echo $(last_dir)
+
 
 run:
 	@docker run -d -p $(PORT):$(PORT) --name $(CONTAINER_NAME) $(last_dir):$(IMAGE_TAG) 

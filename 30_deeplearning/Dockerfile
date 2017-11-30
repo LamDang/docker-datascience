@@ -66,4 +66,9 @@ USER root
 RUN pip install --upgrade https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.4.0-cp36-cp36m-linux_x86_64.whl
 RUN pip install --upgrade keras
 
+
+RUN conda remove -y xgboost
+
+RUN cd $ADD_PKG_PATH &&  git clone --recursive https://github.com/dmlc/xgboost.git &&  	cd xgboost && make && cd python-package &&  python setup.py install 
+
 USER $NB_USER
