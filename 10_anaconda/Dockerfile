@@ -27,8 +27,11 @@ RUN cd /tmp && \
 # Install Anaconda
 RUN conda update -yq conda
 RUN conda install -c defaults -y anaconda==${ANACONDA_VERSION} && \
+    conda install ipython=5.3.0 -y && \
     conda clean -tipsy
 RUN python -m ipykernel install --prefix=$CONDA_DIR --display-name "Python 3"
+
+
 
 # Jupyter add-on
 RUN conda install -yq notebook

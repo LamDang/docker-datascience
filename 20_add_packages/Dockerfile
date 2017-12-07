@@ -6,7 +6,7 @@ USER root
 
 ENV ADD_PKG_PATH /usr/local/additional_packages
 RUN mkdir -m 777 ${ADD_PKG_PATH}
-RUN apt-get update -y && apt-get install -yq cmake g++ libgomp1
+RUN apt-get update -y && apt-get install -yq cmake g++ libgomp1 && apt-get clean
 
 # Install additional packages
 # USER $NB_USER
@@ -67,8 +67,8 @@ RUN conda install -y -c conda-forge \
     fuzzywuzzy
 
 RUN pip install bottle line_profiler
-RUN conda install -c anaconda coverage pylint
-RUN conda install -c barnybug pg8000 
+RUN conda install -c anaconda coverage pylint cloudpickle=0.2.2
+RUN pip install pg8000 
 
 
 # Cleanup
