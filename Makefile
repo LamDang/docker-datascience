@@ -1,4 +1,4 @@
-IMAGE_TAG=2.3                                                                                                                                                                                            
+IMAGE_TAG=2.31                                                                                                                                                                                            
 PORT=8888
 CONTAINER_NAME=jupyter
 
