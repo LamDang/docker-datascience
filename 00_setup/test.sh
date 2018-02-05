@@ -10,7 +10,7 @@ docker build -t ${image_name} $DIR
 
 ## Run tests
 echo "Test home folder"
-docker run --rm ${image_name} ls -al /home/ipython
+docker run --rm ${image_name} bash -c "ls -al /home"
 
 ## Clean up
 docker rmi ${image_name}

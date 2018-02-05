@@ -19,7 +19,9 @@ RUN apt-get update && apt-get install -yq \
     vim \
     openjdk-8-jdk-headless \
     openssh-server \
-	crontab
+    net-tools \
+    cron
+
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install Tini
@@ -32,8 +34,8 @@ RUN wget --quiet https://github.com/krallin/tini/releases/download/v0.10.0/tini 
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     locale-gen
 ENV SHELL /bin/bash
-ENV NB_USER ipython
-ENV NB_UID 1001
+ENV NB_USER ubuntu
+ENV NB_UID 1000
 ENV HOME /home/$NB_USER
 ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
