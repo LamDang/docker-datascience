@@ -40,12 +40,21 @@ RUN jupyter nbextension enable execute_time/ExecuteTime && \
     jupyter nbextension enable toc2/main
 
 
-# patch ipython to 6. Cancelled, this is not working					
-#RUN conda update ipython && conda install -c conda-forge jedi=0.9.0
-
 # Config Jupyter
 USER root
 COPY jupyter_notebook_config.py /home/$NB_USER/.jupyter/
+RUN printf "\nc.NotebookApp.token = u'' \n\n" >> /home/${NB_USER}/.jupyter/jupyter_notebook_config.py && \
+    mkdir -p $HOME/.ipython/profile_default/ && \
+    ln -s $HOME/.jupyter/jupyter_notebook_config.py $HOME/.ipython/profile_default/ipython_notebook_config.py
+
+# Add Domino's dependencies
+RUN apt-get update && apt-get install -yq gcc
+RUN pip install \
+    flask==0.12 \
+    jsonify==0.5 \
+    uwsgi==2.0.14 \
+    cairocffi     # required for Python 3
+
 # Add script to resume notebook output
 COPY jupyter_custom.js /tmp/
 RUN cat /tmp/jupyter_custom.js >> \
