@@ -37,6 +37,7 @@ RUN python -m ipykernel install --prefix=$CONDA_DIR --display-name "Python 3"
 RUN conda install -yq notebook
 
 RUN conda install -yq -c conda-forge \
+    jupyterlab \
     jupyter_contrib_nbextensions \
     tqdm
 RUN jupyter nbextension enable execute_time/ExecuteTime && \
