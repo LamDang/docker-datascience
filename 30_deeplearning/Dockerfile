@@ -11,8 +11,8 @@ MAINTAINER LAM DANG
 ENV CUDA_VERSION 8.0
 ENV CUDA_PKG_VERSION 8-0=8.0.61-1
 LABEL com.nvidia.volumes.needed="nvidia_driver"
-LABEL com.nvidia.cuda.version="8.0"
-
+LABEL com.nvidia.cuda.version="${CUDA_VERSION}"
+LABEL com.nvidia.cudnn.version="${CUDNN_VERSION}"
 # Add CUDA Repo
 USER root
 
@@ -45,7 +45,7 @@ RUN echo "/usr/local/nvidia/lib" >> /etc/ld.so.conf.d/nvidia.conf && \
 
 ENV PATH /usr/local/nvidia/bin:/usr/local/cuda/bin:${PATH}
 ENV LD_LIBRARY_PATH /usr/local/nvidia/lib:/usr/local/nvidia/lib64:${LD_LIBRARY_PATH}
-
+RUN conda install -c anaconda cudatoolkit -y
 # Install CuDNN
 USER root
 
@@ -63,7 +63,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ###################
 
 USER root
-RUN pip install https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.4.0-cp36-cp36m-linux_x86_64.whl
+RUN pip install https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.5.0-cp36-cp36m-linux_x86_64.whl
 RUN pip install keras
 
 USER $NB_USER
