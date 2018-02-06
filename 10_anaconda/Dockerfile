@@ -4,7 +4,7 @@ MAINTAINER Lam Dang
 
 USER root
 # Setup env
-ENV ANACONDA_VERSION 4.4.0
+ENV ANACONDA_VERSION 5.0.1
 ENV CONDA_DIR /opt/conda
 ENV PATH $CONDA_DIR/bin:$PATH
 
@@ -27,10 +27,15 @@ RUN cd /tmp && \
 # Install Anaconda
 RUN conda update -yq conda
 RUN conda install -c defaults -y anaconda==${ANACONDA_VERSION} && \
+    conda install ipython=5.3.0 -y && \
     conda clean -tipsy
 RUN python -m ipykernel install --prefix=$CONDA_DIR --display-name "Python 3"
 
+
+
 # Jupyter add-on
+RUN conda install -yq notebook
+
 RUN conda install -yq -c conda-forge \
     jupyterlab \
     jupyter_contrib_nbextensions \
@@ -38,8 +43,6 @@ RUN conda install -yq -c conda-forge \
 RUN jupyter nbextension enable execute_time/ExecuteTime && \
     jupyter nbextension enable collapsible_headings/main && \
     jupyter nbextension enable toc2/main
-# patch ipython to 6.
-RUN conda update ipython && conda install jedi
 
 # Config Jupyter
 USER root
