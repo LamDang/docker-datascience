@@ -4,7 +4,7 @@ MAINTAINER Lam Dang
 
 USER root
 # Setup env
-ENV ANACONDA_VERSION 4.4.0
+ENV ANACONDA_VERSION 5.0.1
 ENV CONDA_DIR /opt/conda
 ENV PATH $CONDA_DIR/bin:$PATH
 
@@ -13,7 +13,7 @@ RUN apt-get update --fix-missing && apt-get install -y \
     wget bzip2 ca-certificates \
     libglib2.0-0 libxext6 libsm6 libxrender1 \
     git mercurial subversion \
-    python-setuptools htop screen 
+    python-setuptools
 
 # Install Miniconda python 3
 USER root
@@ -31,6 +31,7 @@ RUN conda install -c defaults -y anaconda==${ANACONDA_VERSION} && \
 RUN python -m ipykernel install --prefix=$CONDA_DIR --display-name "Python 3"
 
 # Jupyter add-on
+RUN conda install -yq notebook
 RUN conda install -yq -c conda-forge \
     jupyterlab \
     jupyter_contrib_nbextensions \
@@ -38,7 +39,6 @@ RUN conda install -yq -c conda-forge \
 RUN jupyter nbextension enable execute_time/ExecuteTime && \
     jupyter nbextension enable collapsible_headings/main && \
     jupyter nbextension enable toc2/main
-
 
 # Config Jupyter
 USER root
@@ -68,6 +68,7 @@ RUN chmod +x /usr/local/bin/start-notebook.sh
 CMD ["start-notebook.sh"]
 
 # Add conda to path
-RUN echo 'export PATH='${CONDA_DIR}'/bin:$PATH' >> /home/$NB_USER/.bashrc
+RUN echo 'export PATH='${CONDA_DIR}'/bin:$PATH' >> /home/$NB_USER/.bashrc \
+    && echo 'export PATH='${CONDA_DIR}'/bin:$PATH' >> /home/$NB_USER/.domino-defaults
 RUN chown -R $NB_USER:$NB_USER /home/$NB_USER/.conda
 USER $NB_USER
