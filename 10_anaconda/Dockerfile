@@ -68,6 +68,7 @@ RUN chmod +x /usr/local/bin/start-notebook.sh
 CMD ["start-notebook.sh"]
 
 # Add conda to path
-RUN echo 'export PATH='${CONDA_DIR}'/bin:$PATH' >> /home/$NB_USER/.bashrc
+RUN echo 'export PATH='${CONDA_DIR}'/bin:$PATH' >> /home/$NB_USER/.bashrc \
+    && echo 'export PATH='${CONDA_DIR}'/bin:$PATH' >> /home/$NB_USER/.domino-defaults
 RUN chown -R $NB_USER:$NB_USER /home/$NB_USER/.conda
 USER $NB_USER
